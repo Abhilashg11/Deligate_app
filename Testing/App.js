@@ -7,10 +7,10 @@ import { DisplayText } from './components/displayComponents/text';
 import { ThemeToggle } from './components/displayComponents/themeToggle';
 import { ScreenWrapper } from './themes/screenWrapper';
 import { Button } from './components/displayComponents/button';
-import { ScreenRenderer } from './components/renders/screenRenderer';
-import { homeForm } from './metadata/home/profile.metadata';
+import { patientWorkflow } from './metadata/home/profile.metadata';
 import { useEffect } from 'react';
 import { runMigrations } from './database/migrations';
+import { WorkflowRenderer } from "./components/renders/workflowRenderer"
 import Test2 from './components/systemComponents/date/Test2';
 
 import {
@@ -79,8 +79,8 @@ function AppContent() {
 
   return (
     <View style={{ flex: 1,justifyContent: 'center', alignItems: 'center' }}>
-      <ScreenRenderer
-      metadata={homeForm}
+      <WorkflowRenderer
+      metadata={patientWorkflow}
       />
     </View>
   );

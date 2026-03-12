@@ -12,7 +12,7 @@ export function CardRenderer({ card }) {
     ]}>
       {card.title && <Text>{card.title}</Text>}
 
-      {card.sections.map((section) => (
+      {card.sections.map((section,index) => (
         <SectionRenderer key={section.id} section={section} />
       ))}
     </View>

@@ -132,3 +132,68 @@ export const homeForm = {
     sync: true
   },
 };
+
+
+export const patientWorkflow = {
+  type: "workflow",
+
+  steps: [
+
+    {
+      id: "demographics",
+      title: "Demographics",
+
+      cards: [
+        {
+          id: "personalInfo",
+          title: "Personal Info",
+
+          sections: [
+            {
+              id:"personalInfo",
+              layout: "grid",
+              columns: 1,
+
+              fields: [
+                { type: "text", name: "first_name", label: "First Name" },
+                { type: "text", name: "last_name", label: "Last Name" },
+                { type: "date", name: "dob", label: "DOB" },
+                {
+  type: "uploadDocument",
+  name: "dda_document",
+  label: "Upload DDA Document",
+  required: true
+}
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: "medical",
+      title: "Medical Profile",
+
+      cards: [
+        {
+          id: "diagnosis",
+          title: "Diagnosis",
+
+          sections: [
+            {
+              id:"contactInfo",
+              layout: "stack",
+
+              fields: [
+                { type: "textarea", name: "diagnosis", label: "Diagnosis" },
+                { type: "textarea", name: "allergies", label: "Allergies" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+
+  ]
+};

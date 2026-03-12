@@ -11,8 +11,6 @@ export function DisplayText({
   ...props
 }) {
   const { colors } = useTheme();
-
-
   const textColor =
     color === "secondary"
       ? colors.textSecondary

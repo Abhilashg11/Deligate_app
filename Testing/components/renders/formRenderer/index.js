@@ -4,6 +4,7 @@ import { PhoneInput } from "../../systemComponents/phoneNumber";
 import { TextArea } from "../../systemComponents/textArea";
 import { TextBox } from "../../systemComponents/textBox";
 import { DateInput } from "../../systemComponents/date";
+import { UploadDocument } from '../../systemComponents/uploadDocument/index'
 
 
 const FIELD_MAP = {
@@ -11,7 +12,8 @@ const FIELD_MAP = {
   email: EmailInput,
   phone: PhoneInput,
   textarea: TextArea,
-  date: DateInput
+  date: DateInput,
+  uploaddocument: UploadDocument
 };
 
 
