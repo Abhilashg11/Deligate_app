@@ -39,7 +39,7 @@ export function TextBox({
     <View style={styles.container}>
       <View style={{ marginBottom: 16 }}>
         {label && (
-          <DisplayText style={{ color: colors.textPrimary, marginBottom: 4 }}>
+          <DisplayText style={{ color: colors?.textPrimary, marginBottom: 4 }}>
             {label}
           </DisplayText>
         )}
@@ -48,8 +48,8 @@ export function TextBox({
           style={[
             styles.inputContainer,
             {
-              borderColor: error ? colors.error : colors.border,
-              backgroundColor: colors.inputBg,
+              borderColor: error ? colors?.error : colors?.border,
+              backgroundColor: colors?.inputBg,
             },
           ]}
         >
@@ -65,8 +65,8 @@ export function TextBox({
               transformValue ? transformValue(text, onChange) : onChange(text)
             }
             onBlur={onBlur}
-            placeholderTextColor={colors.placeholder}
-            style={[styles.input, { color: colors.textPrimary }]}
+            placeholderTextColor={colors?.placeholder}
+            style={[styles.input, { color: colors?.textPrimary }]}
             placeholder={placeholder || `Enter ${label || 'value'}`}
             {...inputProps}
           />
@@ -79,7 +79,7 @@ export function TextBox({
         </View>
 
         {error && (
-          <Text style={{ color: colors.error, marginTop: 4 }}>
+          <Text style={{ color: colors?.error, marginTop: 4 }}>
             {error.message}
           </Text>
         )}

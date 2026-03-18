@@ -1,6 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { axiosInstance } from './axiosInstance';
 import { Auth_LOGIN_URL, Auth_LOGOUT_URL, AUTH_REFRESH_URL, Auth_SIGNUP_URL } from './constants';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux-store/actions/userActions'
+
 
 export const userSignIn = async (payload) => {
   try {
@@ -15,9 +18,10 @@ export const userSignIn = async (payload) => {
   }
 };
 
-export const userLogin = async (credentials) => {
+export const userLogin = async (credentials,dispatch) => {
   try {
     const response = await axiosInstance.post(Auth_LOGIN_URL, credentials);
+    dispatch(setUser(response.data))
     return response.data;
   } catch (error) {
     if (error) {

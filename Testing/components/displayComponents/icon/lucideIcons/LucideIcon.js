@@ -1,0 +1,110 @@
+import React from 'react';
+import { View } from 'react-native';
+import {
+  Files,
+  ChevronRight,
+  UserRoundPen,
+  ClipboardClock,
+  Settings,
+  LogOut,
+  CircleX,
+  BrushCleaning,
+  LocateFixed,
+  ArrowLeft,
+  Bubbles,
+  Bell,
+  ShieldCheck,
+  Palette,
+  Languages,
+  Info,
+  Mail,
+  FileChartColumn,
+  CircleQuestionMark,
+  Sun,
+  MoonStar,
+  CircleCheckBig,
+  RefreshCw,
+  ClockFading,
+  Droplets,
+  CupSoda,
+  Truck,
+  Route,
+  AlertCircle,
+  Camera,
+  Eye,
+  EyeClosed,
+  EyeOff,
+  ChevronLeft,
+  ChevronDown,
+  Check,
+  Box,
+  Square,
+  Map,
+  FileText,
+  Clock,
+  Wrench,
+  Lock
+} from 'lucide-react-native';
+
+const ICON_MAP = {
+  Files,
+  ChevronRight,
+  UserRoundPen,
+  ClipboardClock,
+  Settings,
+  LogOut,
+  CircleX,
+  BrushCleaning,
+  LocateFixed,
+  ArrowLeft,
+  Bubbles,
+  Bell,
+  ShieldCheck,
+  Palette,
+  Mail,
+  Languages,
+  Info,
+  FileChartColumn,
+  CircleQuestionMark,
+  Sun,
+  MoonStar,
+  CircleCheckBig,
+  RefreshCw,
+  ClockFading,
+  Droplets,
+  CupSoda,
+  Truck,
+  Route,
+  AlertCircle,
+  Camera,
+  Eye,
+  EyeClosed,
+  EyeOff,
+  ChevronLeft,
+  ChevronDown,
+  Check,
+  Box,
+  Square,
+  Map,
+  FileText,
+  Clock,
+  Wrench,
+  Lock
+};
+
+const LucideIcon = ({ icon_name, size = 24, color = '#000', style, strokeWidth }) => {
+  const IconComponent = ICON_MAP[icon_name];
+
+  if (!IconComponent) {
+    console.warn(`Lucide icon "${icon_name}" not found.`);
+    return null;
+  }
+
+  return (
+    <View style={style}>
+      <IconComponent size={size} color={color} strokeWidth={strokeWidth} />
+    </View>
+  );
+};
+
+export default LucideIcon;

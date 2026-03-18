@@ -12,7 +12,8 @@ import { useEffect } from 'react';
 import { runMigrations } from './database/migrations';
 import { WorkflowRenderer } from "./components/renders/workflowRenderer"
 import Test2 from './components/systemComponents/date/Test2';
-
+import AuthGate from './screens/Auth/AuthGate'
+import { homeForm } from './metadata/home/profile.metadata'
 import {
   clearDatabase,
   getTableInfo,
@@ -27,6 +28,10 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './redux-store/store';
 import { startSyncListener } from './network/network_listener';
+import LoginFrom from './screens/Auth/LoginForm'
+import LoginScreen from './screens/Auth/LoginForm';
+import { ScreenRenderer } from './components/renders/screenRenderer';
+import { loginForm } from './metadata/home/login.metadata'
 
 function App() {
   // console.log("App metadata:", homeForm);
@@ -35,9 +40,9 @@ function App() {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <ThemeProvider>
-            <ScreenWrapper>
+            {/* <ScreenWrapper> */}
               <AppContent />
-            </ScreenWrapper>
+            {/* </ScreenWrapper> */}
           </ThemeProvider>
         </PersistGate>
       </Provider>
@@ -78,9 +83,9 @@ function AppContent() {
   }
 
   return (
-    <View style={{ flex: 1,justifyContent: 'center', alignItems: 'center' }}>
-      <WorkflowRenderer
-      metadata={patientWorkflow}
+    <View style={{ flex: 1,justifyContent: 'center'}}>
+      <AuthGate
+      metadata={loginForm}
       />
     </View>
   );

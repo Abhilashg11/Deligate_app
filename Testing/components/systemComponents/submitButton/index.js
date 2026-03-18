@@ -2,6 +2,7 @@
 import React from "react";
 import { Button, StyleSheet, View } from "react-native";
 import { useFormContext } from "react-hook-form";
+import { LinearGradient } from "react-native-linear-gradient";
 
 export function SubmitButton({
   title = "Submit",
@@ -11,24 +12,23 @@ export function SubmitButton({
   const { handleSubmit, formState } = useFormContext();
 
   return (
-    <View 
+    <LinearGradient colors={['#0D5F7A','#1780A0','#239EC4']}
       style={styles.container}>
     <Button
-    color={"#ffffff"}
+      color={"#ffffff"}
       title={formState.isSubmitting ? "Submitting..." : title}
       disabled={disabled || formState.isSubmitting}
       onPress={handleSubmit(onSubmit)}
     />
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
-    borderWidth: 1,
-    borderRadius: 8,
-    
-     backgroundColor: "#833cb8",
+    // borderWidth: 1,
+    borderRadius: 14,
+    height:49,
+    justifyContent:"center"
   },
 });

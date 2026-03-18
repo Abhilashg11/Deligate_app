@@ -6,46 +6,72 @@ import { ActionRenderer } from "../actionRenderer";
 import { createPatient } from "../../../offline-modules/patients/patients.service"
 import { processSyncQueue } from "../../../sync/processSyncQueue";
 import { api } from "../../../services/apiServices/syncSevices/patientSyncApi";
-
+import { SimpleFormRenderer } from "../simpleFormRenderer";
+import { WorkflowRenderer } from '../workflowRenderer/index'
+ 
 
 export function ScreenRenderer({ metadata }) {
 
   const SERVICE_MAP = {
-    "createpatient": createPatient,
-  }
-  const methods = useForm({ 
+    createpatient: createPatient,
+  };
+
+  const methods = useForm({
     mode: "onBlur",
     reValidateMode: "onChange"
-   });
-   
-     const onSubmit = async (data) => {
-       try {
-      const serviceFunction = SERVICE_MAP[metadata.submit.service?.toLowerCase()];
-      const localId = await serviceFunction(data);
-      await processSyncQueue(api);
-      console.log("Saved locally:", localId);
-      console.log("Form Data:", data);  
+  });
+
+  const onSubmit = async (data) => {
+    try {
+
+      const serviceFunction =
+        SERVICE_MAP[metadata.submit?.service?.toLowerCase()];
+
+      if (serviceFunction) {
+        const localId = await serviceFunction(data);
+        await processSyncQueue(api);
+
+        console.log("Saved locally:", localId);
+      }
+
+      console.log("Form Data:", data);
+
     } catch (error) {
       console.error("Form submission error:", error);
     }
-
-   }
+  };
 
   return (
     <FormProvider {...methods}>
-      {metadata.cards.map((card) => (
-        <CardRenderer key={card.id} card={card} />
-    ))}
-   
-    {
-      metadata.actions.map(action => (
-        <ActionRenderer
-          key={action.label}
-          action={action}
-          onSubmit={onSubmit}
-        />
-      ))
-    }
+
+      <View>
+
+        {/* Render Screen Type */}
+
+        {metadata.type === "workflow" && (
+          <WorkflowRenderer metadata={metadata} onSubmit={onSubmit} />
+        )}
+
+        {metadata.type === "form" && (
+          <SimpleFormRenderer metadata={metadata} />
+        )}
+
+        {/* Render Actions at Bottom */}
+
+        {metadata.actions && (
+          <View >
+            {metadata.actions.map((action) => (
+              <ActionRenderer
+                key={action.label}
+                action={action}
+                onSubmit={methods.handleSubmit(onSubmit)}
+              />
+            ))}
+          </View>
+        )}
+
+      </View>
+
     </FormProvider>
   );
 }

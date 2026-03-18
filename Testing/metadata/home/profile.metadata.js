@@ -24,6 +24,10 @@ export const homeForm = {
               label: 'First Name',
               required: true,
               span: 1,
+              colors:{
+                title:'#000000',
+                
+              },
               fieldError:{
                 message: "First name is required",
               }

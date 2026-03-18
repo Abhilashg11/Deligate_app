@@ -1,39 +1,39 @@
-import React, { createContext, useContext, useState } from "react";
-import { useColorScheme } from "react-native";
-import { lightColors, darkColors } from "./colors";
-import { spacing } from "./spacing";
+// ThemeContext 2.js
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useColorScheme } from 'nativewind';
 
-const ThemeContext = createContext(null);
+import { getThemeStyles } from '../styles/themeStyles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export function ThemeProvider({ children }) {
-  const systemScheme = useColorScheme();
+const ThemeContext = createContext({ theme: 'light', toggleTheme: () => {} });
 
-  // null = follow system
-  const [mode, setMode] = useState(null); // "light" | "dark" | null
+export const ThemeProvider = ({ children, metadata }) => {
+  const [theme, setTheme] = useState('light');
+  const { setColorScheme } = useColorScheme();
 
-  const isDarkMode =
-    mode === "dark" ||
-    (mode === null && systemScheme === "dark");
-
-  const theme = {
-    isDarkMode,
-    mode,
-    setMode,
-    colors: isDarkMode ? darkColors : lightColors,
-    spacing,
+  const toggleTheme = async (next) => {
+    setTheme(next);
+    setColorScheme(next);
+    await AsyncStorage.setItem('theme', next);
   };
 
+  useEffect(() => {
+    const loadTheme = async () => {
+      const storedTheme = await AsyncStorage.getItem('theme');
+      if (storedTheme) {
+        setTheme(storedTheme);
+        setColorScheme(storedTheme);
+      }
+    };
+    loadTheme();
+  }, []);
+
+  const themeStyles = getThemeStyles(theme, metadata);
   return (
-    <ThemeContext.Provider value={theme}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, themeStyles }}>
       {children}
     </ThemeContext.Provider>
   );
-}
+};
 
-export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used inside ThemeProvider");
-  }
-  return context;
-}
+export const useTheme = () => useContext(ThemeContext);
