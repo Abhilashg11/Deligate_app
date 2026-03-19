@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Drainage from '~/screens/sliderScreens/Drainage';
 import MetaData from '../meta_data/metadata.json';
-import MainLayout from '~/layout/MainLayout';
+import MainLayout from '../layout/MainLayout';
 import ApplicationStatus from '~/screens/applicationStatusScreen/ApplicationStatus';
 import EditProfile from '~/screens/profileScreen/editProfileScreen/EditProfile';
 import Settings from '~/screens/settingScreen/Settings';

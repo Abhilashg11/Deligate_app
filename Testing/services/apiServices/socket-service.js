@@ -8,7 +8,7 @@ import { progressUpdate } from '~/store/actions/complaintActions';
 
 export default function useSocket(userid) {
   const hasConnected = useRef(false);
-  const userId = useSelector((state) => state.user.userData?._id) || userid;
+  // const userId = useSelector((state) => state.user.userData?._id) || userid;
   const dispatch = useDispatch();
 
   useEffect(() => {

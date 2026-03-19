@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 // import MainStack from '../../navigation/MainStack';
 // import AuthPage from './AuthPage';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavigationContainer } from "@react-navigation/native";
+import { BottomTabs } from "../../navigation/BottomTabs"
 // import LottieView from 'lottie-react-native';
 // import NotificationHelper from '~/components/systemComponents/Notification/NotificationHelper';
 // import { refreshToken } from '../../services/apiServices/auth-service';
@@ -103,7 +105,7 @@ const AuthGate = ({metadata}) => {
   //   );
   // }
 
-  if (!loggedIn) return <LoginForm
+  if (loggedIn) return <LoginForm
   metadata={metadata}
   />;
 
@@ -145,12 +147,9 @@ const AuthGate = ({metadata}) => {
 //   }
 
   return (
-    <>
-      {/* <NotificationHelper /> */}
-      {/* <MainStack /> */}
-      <Text>hihihih</Text>
-      
-    </>
+  <NavigationContainer>
+      <BottomTabs />
+    </NavigationContainer>
   );
 };
 

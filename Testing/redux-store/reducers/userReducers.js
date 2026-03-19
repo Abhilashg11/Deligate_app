@@ -6,9 +6,9 @@ const initialState = {
 };
 
 export const rootReducer = (state = initialState, action) => {
+  console.log("-----",action)
   switch (action.type) {
     case SET_USER:
-     console.log("Dispatching SET_USER", data);
       return { ...state, userData: action.payload };
 
     case CLEAR_USER:

@@ -43,7 +43,12 @@ import {
   FileText,
   Clock,
   Wrench,
-  Lock
+  ClipboardList,
+  Lock,
+  UserPlus,
+  House,
+  Users,
+  UserPen
 } from 'lucide-react-native';
 
 const ICON_MAP = {
@@ -59,6 +64,7 @@ const ICON_MAP = {
   ArrowLeft,
   Bubbles,
   Bell,
+  UserPen,
   ShieldCheck,
   Palette,
   Mail,
@@ -89,7 +95,11 @@ const ICON_MAP = {
   FileText,
   Clock,
   Wrench,
-  Lock
+  UserPlus,
+  Lock,
+  House,
+  Users,
+  ClipboardList
 };
 
 const LucideIcon = ({ icon_name, size = 24, color = '#000', style, strokeWidth }) => {

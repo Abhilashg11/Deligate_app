@@ -33,6 +33,7 @@ import LoginScreen from './screens/Auth/LoginForm';
 import { ScreenRenderer } from './components/renders/screenRenderer';
 import { loginForm } from './metadata/home/login.metadata'
 
+
 function App() {
   // console.log("App metadata:", homeForm);
   return (

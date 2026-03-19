@@ -33,7 +33,7 @@ export default function LoginForm() {
     if (!email || !password) return;
 
     try {
-      const res = await userLogin({ email, password },dispatch);
+      const res = await userLogin({ email:email.toLowerCase(), password },dispatch);
       console.log("everything going well")
       console.log(res);
     } catch (err) {
