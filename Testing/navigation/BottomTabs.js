@@ -23,8 +23,11 @@ export const BottomTabs =() => {
 
   return (
     <Tab.Navigator screenOptions={{ headerShown: false,
-  tabBarActiveTintColor: bottomNavBar.activeColor,
-        tabBarInactiveTintColor: bottomNavBar.inactiveColor,
+  // tabBarActiveTintColor: bottomNavBar.activeColor,
+  //       tabBarInactiveTintColor: bottomNavBar.inactiveColor,
+  //  tabBarStyle: {
+  //         backgroundColor: bottomNavBar.backgroundColor,   // <—— your metadata value
+  //       },
      }}>
   {bottomNavBar.tabs.map((tab, index) => (
         <Tab.Screen

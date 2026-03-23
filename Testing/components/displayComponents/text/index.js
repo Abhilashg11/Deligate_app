@@ -16,7 +16,6 @@ export function DisplayText({
     color === "secondary"
       ? colors?.textSecondary
       : lightColors?.textPrimary || lightColors?.textPrimary;
-
   return (
     <Text
       {...props}

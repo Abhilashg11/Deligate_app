@@ -4,13 +4,14 @@ import { View, Text, TouchableOpacity } from "react-native";
 
 export default function FilterChips({ options, selected, onSelect }) {
   return (
-    <View style={{ flexDirection: "row", marginBottom: 10 }}>
+    <View style={{ flexDirection: "row", margin: 10 }}>
       {options.map((opt) => (
         <TouchableOpacity
           key={opt.value}
           onPress={() => onSelect(opt.value)}
           style={{
-            padding: 8,
+            padding: 5,
+            paddingHorizontal: 15,
             borderRadius: 20,
             marginRight: 8,
             backgroundColor:

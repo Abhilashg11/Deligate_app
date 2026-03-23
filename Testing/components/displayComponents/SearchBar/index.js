@@ -1,17 +1,39 @@
 // components/SearchBar.js
 import React from "react";
-import { TextInput } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
+import LucideIcon from "../icon/lucideIcons/LucideIcon";
 
-export const SearchBar = ({ placeholder }) => {
+export const SearchBar = ({ 
+  placeholder,
+  icon,
+  value,
+  onChangeText
+
+ }) => {
   return (
+    <View
+    style={styles.container}
+    >
+    <LucideIcon icon_name={icon.icon_name} size = {icon.size} color={icon.color}/>
     <TextInput
-      placeholder={placeholder}
-      style={{
-        backgroundColor: "#f2f2f2",
-        padding: 10,
-        borderRadius: 10,
-        marginBottom: 10,
-      }}
+      value={value}
+      onChangeText={onChangeText}
+      placeholder={placeholder.title}
+      placeholderClassName={placeholder.color}
     />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    borderWidth: 1,
+    borderRadius: 14,
+    borderColor: '#EAEAEA',
+    marginVertical: 10,
+    flexDirection: 'row',
+    alignItems:"center",
+    padding:15,
+    gap: 30
+  }
+})
