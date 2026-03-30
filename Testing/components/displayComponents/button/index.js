@@ -1,31 +1,79 @@
 import React from "react";
-import { Pressable, Text } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { useTheme } from "../../../themes/ThemeProvider";
+import LinearGradient from "react-native-linear-gradient";
+import { DisplayText } from "../text";
 
 export function Button({
-  title,
-  variant = "primary",
+  title = "Button",
   onPress,
   style,
-}) {
-  const { colors, spacing } = useTheme();
 
-  return (
+  // 🔥 NEW PROPS
+  variant = "gradient", // "gradient" | "solid"
+  colors, 
+  gradientColors = ['#0D5F7A','#1780A0','#239EC4'],
+  backgroundColor,
+  textColor = "#fff",
+  disabled = false,
+}) {
+  const { spacing } = useTheme();
+  const content = (
     <Pressable
       onPress={onPress}
-      style={[
+      disabled={disabled}
+      style={({ pressed }) => [
+        styles.button,
         {
-          backgroundColor: colors[variant],
-          paddingVertical: spacing.sm,
-          paddingHorizontal: spacing.lg,
-          borderRadius: 6,
+          opacity: pressed || disabled ? 0.7 : 1,
         },
         style,
       ]}
     >
-      <Text style={{ color: "#fff", fontWeight: "600" }}>
+      <DisplayText style={[styles.text, { color: textColor }]}>
         {title}
-      </Text>
+      </DisplayText>
     </Pressable>
   );
+
+  // 🔥 Gradient version
+  if (variant === "gradient") {
+    return (
+      <LinearGradient
+      start={{x: 0, y: 0}} end={{x: 1, y: 0}}
+        colors={gradientColors}
+        style={styles.wrapper}
+      >
+        {content}
+      </LinearGradient>
+    );
+  }
+
+  // 🔥 Solid version
+  return (
+    <View
+      style={[
+        styles.wrapper,
+        { backgroundColor: backgroundColor || "#1780A0" },
+      ]}
+    >
+      {content}
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    borderRadius: 17,
+  },
+
+  button: {
+    paddingVertical: 14,
+    alignItems: "center",
+    borderRadius: 15,
+  },
+
+  text: {
+    fontWeight: "600",
+  },
+});

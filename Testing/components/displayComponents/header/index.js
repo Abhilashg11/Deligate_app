@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { DisplayText } from '../text';
 
 export const Header = ({ title, subtitle, meta, onBack, action, onAction ,backButton }) => {
-  console.log('subtitle', backButton);
+
   return (
     <View style={{ marginBottom: 4, gap: 13 }}>
       {/* Top Row */}

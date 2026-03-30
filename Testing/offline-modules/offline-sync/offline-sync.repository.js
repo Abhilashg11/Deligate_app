@@ -6,11 +6,16 @@ import {
   INSERT_SYNC_ITEM,
   SELECT_PENDING_SYNC,
   DELETE_SYNC_ITEM,
-  INCREMENT_RETRY_COUNT
+  INCREMENT_RETRY_COUNT,
+  CREATE_SYNC_QUEUE_TABLE
 } from "./offline-sync.queries";
 
+export async function createSyncQueueTable() {
+  await db.execute(CREATE_SYNC_QUEUE_TABLE);
+}
+
 export async function insertSyncItem({ table, recordId, action, payload }) {
-  console.log('Inserting sync item:', { table, recordId, action, payload });
+
   const result = await db.execute(INSERT_SYNC_ITEM, [
     getUUID(),                  // sync_queue row id (NOT local_id)
     table,

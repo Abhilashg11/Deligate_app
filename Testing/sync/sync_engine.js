@@ -6,9 +6,11 @@ import {
 
 
 import { syncPatient } from './handlers/patient_sync';
+import { syncStaff } from './handlers/staff_sync';
 
 const handlers = {
   patients: syncPatient,
+  staff: syncStaff,
 };
 
 export async function processSyncQueue() {

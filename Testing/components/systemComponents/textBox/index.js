@@ -39,7 +39,8 @@ export function TextBox({
     <View style={styles.container}>
       <View style={{ marginBottom: 16 }}>
         {label && (
-          <DisplayText style={{ color: colors?.textPrimary, marginBottom: 4 }}>
+          <DisplayText style={{ color: colors?.textPrimary || "#999999",
+           marginBottom: 4 , fontSize: 12 }}>
             {label}
           </DisplayText>
         )}
@@ -48,8 +49,8 @@ export function TextBox({
           style={[
             styles.inputContainer,
             {
-              borderColor: error ? colors?.error : colors?.border,
-              backgroundColor: colors?.inputBg,
+              borderColor: error ? colors?.error : "#EAEAEA",
+              backgroundColor: colors?.inputBg || "#FFFFFF",
             },
           ]}
         >
@@ -65,7 +66,7 @@ export function TextBox({
               transformValue ? transformValue(text, onChange) : onChange(text)
             }
             onBlur={onBlur}
-            placeholderTextColor={colors?.placeholder}
+            placeholderTextColor={colors?.placeholder || '#D0D0D0' }
             style={[styles.input, { color: colors?.textPrimary }]}
             placeholder={placeholder || `Enter ${label || 'value'}`}
             {...inputProps}
@@ -92,13 +93,13 @@ const styles = StyleSheet.create({
   container: {
     gap: 2,
   },
-
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 14,
     paddingHorizontal: 8,
+    borderColor: "#EAEAEA"
   },
 
   input: {

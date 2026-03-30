@@ -39,7 +39,7 @@ export default function Card({ item, config = {}, onEvent }) {
       </DisplayText>
       <View style={styles.subtitle}>
       <DisplayText style={styles.subtitleText(config?.subtitle)}>
-        {config?.subtitle?.display  ? item[config?.subtitle?.display ] : ""}
+        {config?.subtitle?.display  ? item[config?.subtitle?.display] : ""}
       </DisplayText>
       </View>
       </View>

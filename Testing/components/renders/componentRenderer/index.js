@@ -1,14 +1,25 @@
 import { useState } from 'react';
+import { ScrollView, View, Pressable, StyleSheet } from 'react-native';
+import { FormProvider, useForm } from 'react-hook-form';
+
 import { SearchBar } from '../../displayComponents/SearchBar';
 import Card from '../../displayComponents/card';
 import FilterChips from '../../displayComponents/filterChips';
-import { ScrollView, View } from 'react-native';
-import { Header } from '../../displayComponents/header/index';
+import { Header } from '../../displayComponents/header';
 import { FAB } from '../../displayComponents/FAB';
+import { DocumentUpload } from '../../systemComponents/DocumentUpload';
+import { DateInput } from '../../systemComponents/date';
+import { FormRenderer } from '../formRenderer';
+import { DisplayText } from '../../displayComponents/text';
+import { Button } from '../../displayComponents/button';
+import { handleSubmit } from '../../../handlers/handleEvents';
 
-export const ComponentRenderer = ({ metadata, data, computed = {}, onEvent }) => {
+export const ComponentRenderer = ({ metadata, data = [], onEvent}) => {
   const [filter, setFilter] = useState('ALL');
   const [searchText, setSearchText] = useState('');
+  const {components,submitButton} = metadata || {}
+
+  const methods = useForm();
 
   const FIELD_MAP = {
     search: SearchBar,
@@ -16,188 +27,195 @@ export const ComponentRenderer = ({ metadata, data, computed = {}, onEvent }) =>
     filterchips: FilterChips,
     header: Header,
     fab: FAB,
+    documentUpload: DocumentUpload,
+    date: DateInput,
+    form: FormRenderer,
   };
 
-  // ✅ Pipelines
-  const pipelines = {
-    filteredData: ({ rawData, filter, searchText }) => {
-      let result = rawData;
+  // ✅ Filter logic
+  const getFilteredData = () => {
+    let result = data;
 
-      if (filter !== 'ALL') {
-        result = result.filter(item => item.status === filter);
-      }
+    if (filter !== 'ALL') {
+      result = result.filter(item => item.status === filter);
+    }
 
-      if (searchText) {
-        const text = searchText.toLowerCase();
-        result = result.filter(item =>
+    if (searchText) {
+      const text = searchText.toLowerCase();
+      result = result.filter(
+        item =>
           item.name?.toLowerCase().includes(text) ||
-          item.role?.toLowerCase().includes(text)
-        );
-      }
+          item.role?.toLowerCase().includes(text),
+      );
+    }
 
-      return result;
-    },
+    return result;
   };
 
-  const dataSources = {
-    rawData: data,
-    filteredData: pipelines.filteredData({
-      rawData: data,
-      filter,
-      searchText,
-    }),
-  };
-
-  // ✅ Template parser
-  const parseTemplate = (template, computed) => {
-    if (!template) return '';
-    return template.replace(/{(.*?)}/g, (_, key) => computed[key] ?? '');
-  };
-
-  // ✅ Resolve props
-  const resolveProps = (props = {}) => {
-    const newProps = {};
-
-    Object.keys(props).forEach(key => {
-      const value = props[key];
-
-      if (value?.template) {
-        newProps[key] = {
-          ...value,
-          text: parseTemplate(value.template, computed),
-        };
-      } else {
-        newProps[key] = value;
-      }
-    });
-
-    return newProps;
-  };
-
-  // 🔥 SPECIAL HANDLERS
+  // 🔥 Special handlers
   const specialHandlers = {
-    fab: ({ Component, resolvedProps, index }) => ({
-      type: 'floating',
+    header: ({ Component, props, index }) => ({
+      type: 'header',
       element: (
         <Component
           key={index}
-          {...resolvedProps}
-          resolveProps={resolvedProps}
-          onPress={() => onEvent?.(resolvedProps.event)}
+          {...props}
+          onBack={() => onEvent?.('onBack')}
+          onAction={() => onEvent?.(props?.action?.event)}
         />
       ),
     }),
 
-    filterchips: ({ Component, resolvedProps, index }) => ({
-      type: 'normal',
+    search: ({ Component, props, index }) => ({
+      type: 'header',
       element: (
         <Component
           key={index}
-          {...resolvedProps}
+          {...props}
+          value={searchText}
+          onChangeText={setSearchText}
+        />
+      ),
+    }),
+
+    filterchips: ({ Component, props, index }) => ({
+      type: 'header',
+      element: (
+        <Component
+          key={index}
+          {...props}
           selected={filter}
           onSelect={setFilter}
         />
       ),
     }),
 
-    header: ({ Component, resolvedProps, index }) => ({
-      type: 'normal',
-      element: (
-        <Component
-          key={index}
-          {...resolvedProps}
-          onBack={() => onEvent?.('onBack')}
-          onAction={() => onEvent?.(resolvedProps?.action?.event)}
-        />
-      ),
-    }),
+    card: ({ Component, props }) => {
+      const list = getFilteredData();
 
-    search: ({ Component, resolvedProps, index }) => ({
-      type: 'normal',
+      return {
+        type: 'body',
+        element: list.map((item,i) => (
+          <Component
+            key={item.id || `card-${i}`}
+            item={item}
+            config={props}
+            onEvent={onEvent}
+          />
+        )),
+      };
+    },
+
+    fab: ({ Component, props, index }) => ({
+      type: 'floating',
       element: (
         <Component
           key={index}
-          {...resolvedProps}
-          value={searchText}
-          onChangeText={setSearchText}
+          {...props}
+          onPress={() => onEvent?.(props.event)}
         />
       ),
     }),
   };
 
-  const normalComponents = [];
-  const scrollComponents = [];
+  const headerComponents = [];
+  const bodyComponents = [];
   const floatingComponents = [];
 
-  metadata.forEach((field, index) => {
+  components.forEach((field, index) => {
     const Component = FIELD_MAP[field.type];
     if (!Component) return;
 
-    const resolvedProps = resolveProps(field.props);
+    const props = field.props || {};
+    const handler = specialHandlers[field.type];
 
     let result;
 
-    // ✅ Use special handler if exists
-    if (specialHandlers[field.type]) {
-      result = specialHandlers[field.type]({
-        Component,
-        resolvedProps,
-        index,
-      });
-    }
-
-    // ✅ Default list handling
-    else if (field.dataSource) {
-      const source = dataSources[field.dataSource] || [];
-
-      result = {
-        type: field.scroll ? 'scroll' : 'normal',
-        element: source.map(item => (
-          <Component
-            key={item.id}
-            item={item}
-            config={resolvedProps}
-            onEvent={onEvent}
-          />
-        )),
-      };
-    }
-
-    // ✅ Default component
-    else {
-      result = {
-        type: field.scroll ? 'scroll' : 'normal',
-        element: <Component key={index} {...resolvedProps} />,
-      };
-    }
-
-    // ✅ Push to correct bucket
-    if (result.type === 'floating') {
-      floatingComponents.push(result.element);
-    } else if (result.type === 'scroll') {
-      scrollComponents.push(result.element);
+    if (handler) {
+      result = handler({ Component, props, index , name:field?.name });
     } else {
-      normalComponents.push(result.element);
+      result = {
+        type: 'body',
+        element: <View 
+          key={`body-${index}`} 
+        style={{borderTopWidth:1,paddingTop: 20 
+          ,borderColor: '#EAEAEA'}}>
+          <Component key={index} name={field?.name} {...props} />
+          </View>,
+      };
+    }
+
+    if (result.type === 'header') {
+      headerComponents.push(result.element);
+    } else if (result.type === 'floating') {
+      floatingComponents.push(result.element);
+    } else {
+     if (Array.isArray(result.element)) {
+    bodyComponents.push(...result.element); // ✅ flatten
+    } else {
+    bodyComponents.push(result.element);
+}
     }
   });
 
-  return (
-    <View style={{ flex: 1 }}>
-      {/* Fixed */}
-      <View>{normalComponents}</View>
+  // ✅ Submit handler
+  const handleFormSubmit = async(formData) => {
+    const res = await handleSubmit(formData,submitButton?.event)
+    console.log("Form submit result:", res);
+  }
+  const onError = (errors) => {
+  console.log("❌ VALIDATION ERRORS", errors);
+};
 
-      {/* Scroll */}
-      {scrollComponents.length > 0 && (
+  return (
+    <FormProvider {...methods}>
+      <View style={{ flex: 1 }}>
+
+        {/* 🔹 HEADER (FIXED) */}
+        <View>{headerComponents}</View>
+
+        {/* 🔹 SCROLLABLE BODY */}
         <ScrollView
-          contentContainerStyle={{ paddingBottom: 100 }}
+          contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          {scrollComponents}
+          {bodyComponents}
         </ScrollView>
-      )}
 
-      {/* Floating */}
-      {floatingComponents}
-    </View>
+        {/* 🔹 SUBMIT BUTTON */}
+        {submitButton && 
+        <View style={styles.footer}>
+         <Button
+          title={submitButton?.label}
+          onPress={ // 👈 check this
+    methods.handleSubmit(handleFormSubmit,onError)}
+          colors={[]}
+  />
+        </View>
+        }
+
+        {/* 🔹 FLOATING COMPONENTS */}
+        {floatingComponents}
+      </View>
+    </FormProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  scrollContent: {
+    padding: 5,
+    paddingBottom: 60, // space for button
+  },
+
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    // backgroundColor: '#fff',
+    // padding: 12,
+    marginHorizontal: 10,
+    borderColor: '#EAEAEA',
+  },
+
+});

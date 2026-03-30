@@ -8,7 +8,8 @@ import {
 } from "./offline-sync.repository";
 
 export async function addToSyncQueue({ table, recordId, action, payload }) {
-    console.log('Adding to sync queue:', { table, recordId, action, payload });
+  
+  console.log('Adding to sync queue:', { table, recordId, action, payload });
   await insertSyncItem({ table, recordId, action, payload });
 }
 

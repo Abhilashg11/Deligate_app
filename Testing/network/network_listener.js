@@ -1,7 +1,6 @@
 import NetInfo from "@react-native-community/netinfo";
 import { processSyncQueue } from "../sync/sync_engine";
 
-
 let isSyncing = false;
 
 export function startSyncListener() {

@@ -102,7 +102,7 @@ const handleEvents = (eventName, payload) =>{
 }
   return (
     <View
-    style={{flex: 1,margin: 10,marginTop:70}}
+    style={{flex: 1,margin: 10,marginTop: 70}}
     >
       <ComponentRenderer 
       metadata={teamScreenMeta} 

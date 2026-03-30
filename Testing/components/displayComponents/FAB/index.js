@@ -3,7 +3,7 @@ import React from "react";
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 
 export const FAB = ({ icon, size = 56, color, onPress,resolveProps }) => {
-  console.log("hi aim",resolveProps)
+
   return (
     <View>
     <TouchableOpacity

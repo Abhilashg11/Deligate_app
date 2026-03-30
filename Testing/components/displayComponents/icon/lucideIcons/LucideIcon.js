@@ -28,6 +28,7 @@ import {
   ClockFading,
   Droplets,
   CupSoda,
+  Calendar,
   Truck,
   Route,
   AlertCircle,
@@ -39,6 +40,7 @@ import {
   ChevronDown,
   Check,
   Box,
+  Upload,
   Square,
   Map,
   FileText,
@@ -49,7 +51,10 @@ import {
   UserPlus,
   House,
   Users,
-  UserPen
+  UserPen,
+  Shield,
+  X,
+  User
 } from 'lucide-react-native';
 
 const ICON_MAP = {
@@ -60,6 +65,7 @@ const ICON_MAP = {
   Settings,
   LogOut,
   CircleX,
+  Calendar,
   BrushCleaning,
   LocateFixed,
   ArrowLeft,
@@ -86,6 +92,7 @@ const ICON_MAP = {
   AlertCircle,
   Camera,
   Eye,
+  Upload,
   EyeClosed,
   EyeOff,
   ChevronLeft,
@@ -101,7 +108,10 @@ const ICON_MAP = {
   Lock,
   House,
   Users,
-  ClipboardList
+  ClipboardList,
+  Shield,
+  X,
+  User
 };
 
 const LucideIcon = ({ icon_name, size = 24, color = '#000', style, strokeWidth }) => {
