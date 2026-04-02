@@ -32,6 +32,7 @@ import LoginFrom from './screens/Auth/LoginForm'
 import LoginScreen from './screens/Auth/LoginForm';
 import { ScreenRenderer } from './components/renders/screenRenderer';
 import { loginForm } from './metadata/home/login.metadata'
+import { StepFormRenderer } from './components/renders/stepFormRenderer/StepFormRenderer';
 
 
 function App() {
@@ -40,7 +41,7 @@ function App() {
     <SafeAreaProvider>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <ThemeProvider>
+          <ThemeProvider>   
             {/* <ScreenWrapper> */}
               <AppContent />
             {/* </ScreenWrapper> */}

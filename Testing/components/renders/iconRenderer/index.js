@@ -15,7 +15,6 @@ const ICON_MAP = {
 
 export function renderAdornment(adornment, value) {
   if (!adornment) return null;
-  console.log("users",adornment)
   if (typeof adornment === "function") {
     return adornment(value);
   }

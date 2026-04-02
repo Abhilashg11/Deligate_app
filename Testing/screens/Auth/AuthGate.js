@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 // import MainStack from '../../navigation/MainStack';
 // import AuthPage from './AuthPage';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavigationContainer } from "@react-navigation/native";
-import { BottomTabs } from "../../navigation/BottomTabs"
+import { NavigationContainer } from '@react-navigation/native';
+import { BottomTabs } from '../../navigation/BottomTabs';
 // import LottieView from 'lottie-react-native';
 // import NotificationHelper from '~/components/systemComponents/Notification/NotificationHelper';
 // import { refreshToken } from '../../services/apiServices/auth-service';
@@ -20,9 +20,9 @@ import { BottomTabs } from "../../navigation/BottomTabs"
 // import { findLocation } from '~/services/apiServices/location-service';
 // import useGeoLocation from '~/components/hooks/useGeoLocation';
 // import { setLocationName } from '~/store/actions/locationActions';
-import LoginForm from '../../screens/Auth/LoginForm'
+import LoginForm from './LoginForm';
 
-const AuthGate = ({metadata}) => {
+const AuthGate = ({ metadata }) => {
   // const { loading, token } = useSelector((state) => state.auth);
   // const userId = useSelector((state) => state.user.userData?._id);
   // const { locationName } = useSelector((state) => state.location);
@@ -33,7 +33,7 @@ const AuthGate = ({metadata}) => {
 
   // const dispatch = useDispatch();
   // const animation = useRef(null);
-//   const { permission, requestLocation } = useGeoLocation();
+  //   const { permission, requestLocation } = useGeoLocation();
 
   // useEffect(() => {
   //   const checkAuth = async () => {
@@ -56,36 +56,36 @@ const AuthGate = ({metadata}) => {
   //   checkAuth();
   // }, [token]);
 
-//   useEffect(() => {
-//     const verifyLocation = async () => {
-//       if (!loggedIn) return;
+  //   useEffect(() => {
+  //     const verifyLocation = async () => {
+  //       if (!loggedIn) return;
 
-//       // ask permission only if null
-//       if (permission === null) {
-//         await requestLocation();
-//         return;
-//       }
-//       // already granted → check panchayat
-//       if (permission === 'granted') {
-//         const loc = await Location.getCurrentPositionAsync({
-//           accuracy: Location.Accuracy.High,
-//         });
-//         const res = await findLocation(loc.coords);
-//         if (res?.found) {
-//           dispatch(setLocationName(res.locationName));
-//         } else {
-//           dispatch(setLocationName(null));
-//         }
+  //       // ask permission only if null
+  //       if (permission === null) {
+  //         await requestLocation();
+  //         return;
+  //       }
+  //       // already granted → check panchayat
+  //       if (permission === 'granted') {
+  //         const loc = await Location.getCurrentPositionAsync({
+  //           accuracy: Location.Accuracy.High,
+  //         });
+  //         const res = await findLocation(loc.coords);
+  //         if (res?.found) {
+  //           dispatch(setLocationName(res.locationName));
+  //         } else {
+  //           dispatch(setLocationName(null));
+  //         }
 
-//         setLocationChecked(true);
-//         return;
-//       }
+  //         setLocationChecked(true);
+  //         return;
+  //       }
 
-//       setLocationChecked(true);
-//     };
+  //       setLocationChecked(true);
+  //     };
 
-//     verifyLocation();
-//   }, [loggedIn, permission]);
+  //     verifyLocation();
+  //   }, [loggedIn, permission]);
 
   // useSocket(userId);
 
@@ -100,54 +100,52 @@ const AuthGate = ({metadata}) => {
   //         style={{ width: 100, height: 100 }}
   //       /> */}
   //       <Text>memejeje</Text>
-        
+
   //     </View>
   //   );
   // }
 
-  if (loggedIn) return <LoginForm
-  metadata={metadata}
-  />;
+  if (loggedIn) return <LoginForm metadata={metadata} />;
 
-//   if (permission === null) {
-//     return (
-//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//         <LottieView
-//           source={require('../../assets/loading.json')}
-//           autoPlay
-//           loop
-//           style={{ width: 80, height: 80 }}
-//         />
-//         <Text>Getting location...</Text>
-//       </View>
-//     );
-//   }
+  //   if (permission === null) {
+  //     return (
+  //       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+  //         <LottieView
+  //           source={require('../../assets/loading.json')}
+  //           autoPlay
+  //           loop
+  //           style={{ width: 80, height: 80 }}
+  //         />
+  //         <Text>Getting location...</Text>
+  //       </View>
+  //     );
+  //   }
 
-//   if (permission === 'denied' || permission === 'blocked') {
-//     return <LocationPermissionScreen requestLocation={requestLocation} />;
-//   }
+  //   if (permission === 'denied' || permission === 'blocked') {
+  //     return <LocationPermissionScreen requestLocation={requestLocation} />;
+  //   }
 
-//   if (!locationChecked) {
-//     return (
-//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//         <LottieView
-//           ref={animation}
-//           source={require('../../assets/loading.json')}
-//           autoPlay
-//           loop
-//           style={{ width: 80, height: 80 }}
-//         />
-//         <Text>Checking your service area...</Text>
-//       </View>
-//     );
-//   }
+  //   if (!locationChecked) {
+  //     return (
+  //       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+  //         <LottieView
+  //           ref={animation}
+  //           source={require('../../assets/loading.json')}
+  //           autoPlay
+  //           loop
+  //           style={{ width: 80, height: 80 }}
+  //         />
+  //         <Text>Checking your service area...</Text>
+  //       </View>
+  //     );
+  //   }
 
-//   if (permission === 'granted' && !locationName) {
-//     return <NoServiceScreen />;
-//   }
+  //   if (permission === 'granted' && !locationName) {
+  //     return <NoServiceScreen />;
+  //   }
 
   return (
-  <NavigationContainer>
+    <NavigationContainer>
       <BottomTabs />
     </NavigationContainer>
   );

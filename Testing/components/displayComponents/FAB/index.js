@@ -27,7 +27,7 @@ export const FAB = ({ icon, size = 56, color, onPress,resolveProps }) => {
 const styles = StyleSheet.create({
   fab: {
     position: "absolute",
-    bottom: 20,
+    bottom: 30,
     right: 20,
     justifyContent: "center",
     alignItems: "center",

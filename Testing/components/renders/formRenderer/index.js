@@ -74,7 +74,6 @@ export function FormRenderer({
             if (!Component) return null;
 
             const span = field.fullWidth ? columns : field.span ?? 1;
-            console.log(`Rendering field "${field.name}" and title ${title}`);
             return (
               <View
                 key={index}

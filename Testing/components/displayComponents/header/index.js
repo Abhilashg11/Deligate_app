@@ -1,18 +1,43 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { DisplayText } from '../text';
+import { useNavigation } from '@react-navigation/native';
+import { StepProgressBar } from '../stepProgressBar';
 
-export const Header = ({ title, subtitle, meta, onBack, action, onAction ,backButton }) => {
+export const Header = ({ title,
+   subtitle,
+    meta,
+    onBack,
+    action,
+    onAction, 
+    backButton,
+    isStep,
+    totalSteps,
+    currentStep,
+    hasError
+   }) => {
+
+  const navigate = useNavigation();
 
   return (
-    <View style={{ marginBottom: 4, gap: 13 }}>
+    <View style={{ marginBottom: 2,}}>
       {/* Top Row */}
 
       {/* Back */}
       {backButton && onBack && (
-        <TouchableOpacity onPress={onBack}>
+        <TouchableOpacity onPress={() => navigate.goBack()}>
           <DisplayText>{'< Back'}</DisplayText>
         </TouchableOpacity>
+      )}
+
+      {isStep && (
+        <View>
+          <StepProgressBar
+            totalSteps={totalSteps}
+            currentStep={currentStep}
+            hasError={hasError}
+          />
+        </View>
       )}
 
       <View style={styles.actionContainer}>

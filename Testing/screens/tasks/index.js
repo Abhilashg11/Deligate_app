@@ -1,7 +1,7 @@
-import React from "react";
-import { View, Text, Button } from "react-native";
-import { ComponentRenderer } from "../../components/renders/componentRenderer";
-import {taskScreen} from '../../metadata/home/task.metadata'
+import React from 'react';
+import { View, Text, Button } from 'react-native';
+import { ComponentRenderer } from '../../components/renders/componentRenderer';
+import { taskScreen } from '../../metadata/home/task.metadata';
 export const TaskScreen = ({ navigation }) => {
   return (
     <View>
@@ -10,9 +10,7 @@ export const TaskScreen = ({ navigation }) => {
         title="Go to Details"
         // onPress={() => navigation.navigate("Details")}
       />
-      <ComponentRenderer
-      metadata={taskScreen}
-      />
+      <ComponentRenderer metadata={taskScreen} />
     </View>
   );
-}
+};

@@ -1,5 +1,5 @@
-import NetInfo from "@react-native-community/netinfo";
-import { processSyncQueue } from "../sync/sync_engine";
+import NetInfo from '@react-native-community/netinfo';
+import { processSyncQueue } from '../sync/sync_engine';
 
 let isSyncing = false;
 
@@ -7,13 +7,13 @@ export function startSyncListener() {
   const unsubscribe = NetInfo.addEventListener(async state => {
     if (state.isConnected && !isSyncing) {
       isSyncing = true;
-      console.log("🌐 Internet available → starting sync");
+      console.log('🌐 Internet available → starting sync');
 
       try {
         await processSyncQueue();
         // console.log("✅ Sync completed");
       } catch (e) {
-        console.error("❌ Sync failed:", e);
+        console.error('❌ Sync failed:', e);
       } finally {
         isSyncing = false;
       }

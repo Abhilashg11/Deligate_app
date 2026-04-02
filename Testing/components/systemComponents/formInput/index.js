@@ -1,17 +1,11 @@
-import React from "react";
-import { TextInput, View, Text } from "react-native";
-import { Controller } from "react-hook-form";
-import { useTheme } from "../../../themes/ThemeProvider";
+import React from 'react';
+import { TextInput, View, Text } from 'react-native';
+import { Controller } from 'react-hook-form';
+import { useTheme } from '../../../themes/ThemeProvider';
 
-export function FormInput({
-  control,
-  name,
-  label,
-  rules,
-  ...inputProps
-}) {
+export function FormInput({ control, name, label, rules, ...inputProps }) {
   const { colors, isDarkMode } = useTheme();
-  console.group("name", name);
+  console.group('name', name);
   return (
     <Controller
       control={control}

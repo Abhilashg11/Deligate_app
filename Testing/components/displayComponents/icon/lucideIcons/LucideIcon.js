@@ -7,11 +7,13 @@ import {
   ClipboardClock,
   Settings,
   LogOut,
+  Phone,
   CircleX,
   BrushCleaning,
   LocateFixed,
   ArrowLeft,
   Bubbles,
+  ChevronUp,
   Bell,
   Search,
   ShieldCheck,
@@ -23,6 +25,7 @@ import {
   CircleQuestionMark,
   Sun,
   MoonStar,
+  AlertTriangle,
   CircleCheckBig,
   RefreshCw,
   ClockFading,
@@ -44,6 +47,7 @@ import {
   Square,
   Map,
   FileText,
+  TriangleAlert,
   Clock,
   Wrench,
   ClipboardList,
@@ -54,7 +58,9 @@ import {
   UserPen,
   Shield,
   X,
-  User
+  User,
+  File,
+  Image
 } from 'lucide-react-native';
 
 const ICON_MAP = {
@@ -66,11 +72,13 @@ const ICON_MAP = {
   LogOut,
   CircleX,
   Calendar,
+  AlertTriangle,
   BrushCleaning,
   LocateFixed,
   ArrowLeft,
   Bubbles,
   Bell,
+  Phone,
   UserPen,
   ShieldCheck,
   Palette,
@@ -103,14 +111,18 @@ const ICON_MAP = {
   Map,
   FileText,
   Clock,
+  TriangleAlert,
   Wrench,
   UserPlus,
   Lock,
   House,
+  Image,
   Users,
   ClipboardList,
   Shield,
   X,
+  File,
+  ChevronUp,
   User
 };
 

@@ -1,20 +1,20 @@
-import React from "react";
-import { Pressable, StyleSheet, View } from "react-native";
-import { useTheme } from "../../../themes/ThemeProvider";
-import LinearGradient from "react-native-linear-gradient";
-import { DisplayText } from "../text";
+import React from 'react';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { useTheme } from '../../../themes/ThemeProvider';
+import LinearGradient from 'react-native-linear-gradient';
+import { DisplayText } from '../text';
 
 export function Button({
-  title = "Button",
+  title = 'Button',
   onPress,
   style,
 
   // 🔥 NEW PROPS
-  variant = "gradient", // "gradient" | "solid"
-  colors, 
-  gradientColors = ['#0D5F7A','#1780A0','#239EC4'],
+  variant = 'gradient', // "gradient" | "solid"
+  colors,
+  gradientColors = ['#0D5F7A', '#1780A0', '#239EC4'],
   backgroundColor,
-  textColor = "#fff",
+  textColor = '#fff',
   disabled = false,
 }) {
   const { spacing } = useTheme();
@@ -37,10 +37,11 @@ export function Button({
   );
 
   // 🔥 Gradient version
-  if (variant === "gradient") {
+  if (variant === 'gradient') {
     return (
       <LinearGradient
-      start={{x: 0, y: 0}} end={{x: 1, y: 0}}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
         colors={gradientColors}
         style={styles.wrapper}
       >
@@ -54,7 +55,7 @@ export function Button({
     <View
       style={[
         styles.wrapper,
-        { backgroundColor: backgroundColor || "#1780A0" },
+        { backgroundColor: backgroundColor || '#1780A0' },
       ]}
     >
       {content}
@@ -64,16 +65,16 @@ export function Button({
 
 const styles = StyleSheet.create({
   wrapper: {
-    borderRadius: 17,
+    borderRadius: 14,
   },
 
   button: {
-    paddingVertical: 14,
-    alignItems: "center",
-    borderRadius: 15,
+    paddingVertical: 11,
+    alignItems: 'center',
+    borderRadius: 13,
   },
 
   text: {
-    fontWeight: "600",
+    fontWeight: '600',
   },
 });

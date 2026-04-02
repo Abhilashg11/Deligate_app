@@ -1,4 +1,4 @@
-import { createStaff } from "../offline-modules/staff/staff.service"
+import { createStaff } from "../src/offline-modules/staff/staff.service"
 export const handleSubmit = async (formData,event) =>{
     try{
         switch(event){

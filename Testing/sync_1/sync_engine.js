@@ -2,7 +2,7 @@ import {
   getPendingSyncItems,
   deleteSyncItem,
   incrementRetry,
-} from '../offline-modules/offline-sync/offline-sync.repository';
+} from '../../offline-modules/offline-sync/offline-sync.repository';
 
 import { syncPatient } from './handlers/patient_sync';
 import { syncStaff } from './handlers/staff_sync';

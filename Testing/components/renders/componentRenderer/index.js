@@ -7,29 +7,34 @@ import Card from '../../displayComponents/card';
 import FilterChips from '../../displayComponents/filterChips';
 import { Header } from '../../displayComponents/header';
 import { FAB } from '../../displayComponents/FAB';
-import { DocumentUpload } from '../../systemComponents/DocumentUpload';
+import { LicenseUpload } from '../../systemComponents/licenseUpload/LicenseUpload'
 import { DateInput } from '../../systemComponents/date';
 import { FormRenderer } from '../formRenderer';
 import { DisplayText } from '../../displayComponents/text';
 import { Button } from '../../displayComponents/button';
 import { handleSubmit } from '../../../handlers/handleEvents';
+import { DocumentUpload } from '../../systemComponents/documentUpload/DocumentUpload';
+import { LonTool } from '../../systemComponents/lonTool/LonTool';
+import { Dropdown } from '../../systemComponents/dropdown';
 
-export const ComponentRenderer = ({ metadata, data = [], onEvent}) => {
+export const ComponentRenderer = ({ metadata, data = [], onEvent,methods}) => {
   const [filter, setFilter] = useState('ALL');
   const [searchText, setSearchText] = useState('');
   const {components,submitButton} = metadata || {}
 
-  const methods = useForm();
+
 
   const FIELD_MAP = {
     search: SearchBar,
     card: Card,
     filterchips: FilterChips,
-    header: Header,
     fab: FAB,
-    documentUpload: DocumentUpload,
+    licenseUpload: LicenseUpload,
     date: DateInput,
     form: FormRenderer,
+    documentUpload: DocumentUpload,
+    lontool: LonTool,
+    dropdown: Dropdown
   };
 
   // ✅ Filter logic
@@ -54,17 +59,6 @@ export const ComponentRenderer = ({ metadata, data = [], onEvent}) => {
 
   // 🔥 Special handlers
   const specialHandlers = {
-    header: ({ Component, props, index }) => ({
-      type: 'header',
-      element: (
-        <Component
-          key={index}
-          {...props}
-          onBack={() => onEvent?.('onBack')}
-          onAction={() => onEvent?.(props?.action?.event)}
-        />
-      ),
-    }),
 
     search: ({ Component, props, index }) => ({
       type: 'header',
@@ -97,7 +91,7 @@ export const ComponentRenderer = ({ metadata, data = [], onEvent}) => {
         type: 'body',
         element: list.map((item,i) => (
           <Component
-            key={item.id || `card-${i}`}
+            key={`${item.id}-${i}`}
             item={item}
             config={props}
             onEvent={onEvent}
@@ -140,7 +134,7 @@ export const ComponentRenderer = ({ metadata, data = [], onEvent}) => {
           key={`body-${index}`} 
         style={{borderTopWidth:1,paddingTop: 20 
           ,borderColor: '#EAEAEA'}}>
-          <Component key={index} name={field?.name} {...props} />
+          <Component key={`${field.type}-${field.name || index}`} name={field?.name} {...props} />
           </View>,
       };
     }
@@ -159,16 +153,10 @@ export const ComponentRenderer = ({ metadata, data = [], onEvent}) => {
   });
 
   // ✅ Submit handler
-  const handleFormSubmit = async(formData) => {
-    const res = await handleSubmit(formData,submitButton?.event)
-    console.log("Form submit result:", res);
-  }
-  const onError = (errors) => {
-  console.log("❌ VALIDATION ERRORS", errors);
-};
+
 
   return (
-    <FormProvider {...methods}>
+    <>
       <View style={{ flex: 1 }}>
 
         {/* 🔹 HEADER (FIXED) */}
@@ -182,22 +170,11 @@ export const ComponentRenderer = ({ metadata, data = [], onEvent}) => {
           {bodyComponents}
         </ScrollView>
 
-        {/* 🔹 SUBMIT BUTTON */}
-        {submitButton && 
-        <View style={styles.footer}>
-         <Button
-          title={submitButton?.label}
-          onPress={ // 👈 check this
-    methods.handleSubmit(handleFormSubmit,onError)}
-          colors={[]}
-  />
-        </View>
-        }
 
         {/* 🔹 FLOATING COMPONENTS */}
         {floatingComponents}
       </View>
-    </FormProvider>
+    </>
   );
 };
 

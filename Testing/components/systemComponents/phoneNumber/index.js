@@ -5,15 +5,17 @@ import { useTheme } from '../../../themes/ThemeProvider';
 import { DisplayText } from '../../displayComponents/text';
 import { TextBox } from '../textBox';
 
-export function PhoneInput({ name,
-   label,
-    rules,
-    required = false,
-    fieldError,
-    countryCode = "+1",
-    placeholder,
-    ...props
-   }) {
+export function PhoneInput({
+  name,
+  label,
+  rules,
+  required = false,
+  fieldError,
+  countryCode = '+1',
+  placeholder,
+  startAdornment,
+  ...props
+}) {
   const formatPhone = value => {
     if (!value) return '';
 
@@ -37,21 +39,23 @@ export function PhoneInput({ name,
         name={name}
         label={label}
         keyboardType="number-pad"
-        placeholder={placeholder || "(555) 123-4567"}
+        placeholder={placeholder || '(555) 123-4567'}
         formatValue={formatPhone}
         transformValue={handleChange}
-        startAdornment={<Text>{countryCode}</Text>}
+        startAdornment={startAdornment ||<Text>{countryCode}</Text>}
         rules={{
-  required: required && `${label || "Phone number"} is required`,
-  validate: (value) => {
-    if (!value) return true;
-    if (!/^\d{10}$/.test(value)) {
-      return fieldError?.message || "Enter a valid 10 digit phone number";
-    }
-    return true;
-  },
-  ...rules,
-}}
+          required: required && `${label || 'Phone number'} is required`,
+          validate: value => {
+            if (!value) return true;
+            if (!/^\d{10}$/.test(value)) {
+              return (
+                fieldError?.message || 'Enter a valid 10 digit phone number'
+              );
+            }
+            return true;
+          },
+          ...rules,
+        }}
       />
     </View>
   );

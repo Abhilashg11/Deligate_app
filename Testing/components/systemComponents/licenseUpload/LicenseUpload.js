@@ -15,9 +15,9 @@ import { useController, useFormContext } from 'react-hook-form';
 import { useTheme } from '../../../themes/ThemeProvider';
 import DocumentPicker from 'react-native-document-picker';
 
-export const DocumentUpload = ({
+export const LicenseUpload = ({
   title,
-  name="",
+  name = '',
   // file,
   expiryDate,
   postuploadicons: { eye, cancel } = {},
@@ -53,9 +53,9 @@ export const DocumentUpload = ({
     defaultValue,
   });
 
-  useEffect(()=>{
-    onChange(documents)
-  },[documents])
+  useEffect(() => {
+    onChange(documents);
+  }, [documents]);
 
   const handleView = async doc => {
     try {
@@ -139,19 +139,25 @@ export const DocumentUpload = ({
 
               {/* FILE + DATE */}
               {doc.file || doc.date ? (
-                <View style={{ flexDirection: 'row', gap: 8,alignItems:"center" }}>
+                <View
+                  style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}
+                >
                   {doc.file && (
                     <Text style={{ color: '#239EC4' }}>{doc.file}</Text>
                   )}
-                  {doc.date ? (doc.date && (
-                    <Text style={{ color: '#999' }}>- {doc.date}</Text>
-                  )) : (<Pressable
-                  onPress={() => setOpenIndex(index)}
-                  style={styles.dateBox}
-                >
-                  <LucideIcon icon_name="Calendar" size={14} color="#999" />
-                  <Text style={{ color: '#999' }}>Select expiry date</Text>
-                </Pressable>)}
+                  {doc.date ? (
+                    doc.date && (
+                      <Text style={{ color: '#999' }}>- {doc.date}</Text>
+                    )
+                  ) : (
+                    <Pressable
+                      onPress={() => setOpenIndex(index)}
+                      style={styles.dateBox}
+                    >
+                      <LucideIcon icon_name="Calendar" size={14} color="#999" />
+                      <Text style={{ color: '#999' }}>Select expiry date</Text>
+                    </Pressable>
+                  )}
                 </View>
               ) : (
                 <Pressable
@@ -168,8 +174,11 @@ export const DocumentUpload = ({
                 modal
                 open={openIndex === index}
                 date={new Date()}
-                onConfirm={(selectedDate) => {
-                  console.log("date....",selectedDate.toISOString().split('T')[0])
+                onConfirm={selectedDate => {
+                  console.log(
+                    'date....',
+                    selectedDate.toISOString().split('T')[0],
+                  );
                   setOpenIndex(null);
 
                   setDocuments(prev => ({

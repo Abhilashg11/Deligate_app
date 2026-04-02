@@ -18,10 +18,10 @@ export async function insertPatient(p) {
     p.dob,
     p.gender,
     p.ma_number ?? null,
-    p.status ?? "active",
+    p.status ?? 'active',
     p.created_at,
     p.updated_at,
-    p.sync_status
+    p.sync_status,
   ]);
 }
 
@@ -54,8 +54,7 @@ export async function deleteAllPatients() {
 }
 
 export async function updatePatientServerId(localId, serverId) {
-  await db.execute(Q.UPDATE_SERVER_ID,[serverId, localId]
-  );
+  await db.execute(Q.UPDATE_SERVER_ID, [serverId, localId]);
 }
 
 export const clearDatabase = async () => {

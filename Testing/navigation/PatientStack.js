@@ -9,7 +9,12 @@ export const PatientStack = () => {
       <Stack.Screen 
         name="PatientScreen" 
         component={PatientScreen}
-        options={{ title: "Patient" }}
+        options={{ title: "Team",
+          headerShown: false ,
+          contentStyle: {
+            backgroundColor: "#FFFFFF",
+          },
+         }}
       />
     </Stack.Navigator>
   );

@@ -11,7 +11,7 @@ export const ThemeProvider = ({ children, metadata }) => {
   const [theme, setTheme] = useState('light');
   const { setColorScheme } = useColorScheme();
 
-  const toggleTheme = async (next) => {
+  const toggleTheme = async next => {
     setTheme(next);
     setColorScheme(next);
     await AsyncStorage.setItem('theme', next);
