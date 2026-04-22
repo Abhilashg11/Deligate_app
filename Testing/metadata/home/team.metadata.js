@@ -133,27 +133,36 @@ export const newStaffMeta = {
         components: [
           {
             type: "text",
-            name: "fullname",
-            label: "Full Name",
-            span: 2
+            name: "firstname",
+            label: "First Name",
+          },
+          {
+            type: "text",
+            name: "lastname",
+            label: "Last Name",
           },
           {
             type: "date",
             name: "dob",
-            label: "Date of Birth"
+            label: "Date of Birth",
           },
           {
-            type: "text",
-            name: "maNumber",
-            label: "MA Number"
-          }
+            type: "dropdown",
+            name: "gender",
+            label: "Gender",
+            options: [
+              { label: "Male", value: "male" },
+              { label: "Female", value: "female" },
+              { label: "Other", value: "other" }
+            ]
+          },
         ]
       }
     },
 
     {
       type: "licenseUpload",
-      name: "Competencies",
+      name: "competencies",
       props: {
         onPress: "onLicensePress",
 
@@ -189,13 +198,11 @@ export const newStaffMeta = {
         },
 
         data: {
-          items: [
-            "CMT",
-            "MTTP",
-            "Med Pass",
-            "BGM",
-            "Seizure Protocol"
-          ],
+          itemsByRole: {   // 🔥 EVERYTHING HERE
+            DSP: ["DSP Certification", "First Aid", "CRP"],
+            CMT: ["CMT Certification", "CRP", "First Aid", "Med Pass", "MTTP"],
+            LMT: ["Nursing License", "License Expiration" , "Supervising RN"]
+          },
           itemcolor: '#181818',
           descriptioncolor: "#0D5F7A",
           datecolor: '#999999'
@@ -267,4 +274,68 @@ export const newStaffMeta = {
     }
 
   ]
+}
+
+export const inputile = {
+  components :
+  [
+
+        {
+                type: 'dropdown',
+                name: 'dropdown',
+                label: 'Date of Birth',
+                options: [
+    { label: 'Option 1', value: 'Option 1' },
+    { label: 'Option 2', value: 'Option 2' },
+    { label: 'Option 3', value: 'Option 3' },
+    { label: 'Option 4', value: 'Option 4' },
+    { label: 'Option 5', value: 'Option 5' },
+    { label: 'Option 6', value: 'Option 6' }
+  ]
+              },
+                {
+                type: 'text',
+                name: 'PCP',
+                label: 'PCP (Primary Care Provider)',
+                placeholder: "+1(555) 123-4567",
+                required: false,
+                startAdornment: {
+                    icon_name: 'Phone',
+                size: 15,
+                color: '#999999',
+                },
+                span: 2,
+              },
+               {
+                type: 'text',
+                name: 'Approval_Number',
+                label: 'Approval Number',
+                placeholder: "APR-000000",
+                required: false,
+                 startAdornment: {
+                    icon_name: 'Lock',
+                size: 15,
+                color: '#999999',
+                },
+                span: 2,
+              },
+             {
+  type: "lontool",
+  name: "riskLevel",
+  props: {
+    title: "LON / Risk Tool",
+    label: "Level of Need — select one",
+    required: true,
+    options: ["Low", "Medium", "High"]
+  }
+},
+
+  ],
+    submitButton: {
+    label: "Save Staff Member",
+    color: "#1780A0",
+    textColor: "#FFFFFF",
+    // event: "CREATE_STAFF"
+  }
+
 }

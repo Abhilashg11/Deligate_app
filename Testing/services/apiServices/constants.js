@@ -15,7 +15,7 @@ export const GET_COMPLAINTS_URL = `${API_BASE_URL}complaints/my-complaints`;
 export const UPDATE_COMPLAINT_URL = `${API_BASE_URL}complaints/update`;
 export const UPDATE_USER = `${API_BASE_URL}user/update`;
 export const FIND_LOCATION = `${API_BASE_URL}location/find-location`;
-
+export const STAFF_CREATE_URL = `${API_BASE_URL}staff/create`;
 // export const ENDPOINTS = {
 // AUTH: {
 //     LOGIN: "/auth/login",

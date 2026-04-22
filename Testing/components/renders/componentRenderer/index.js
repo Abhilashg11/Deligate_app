@@ -16,8 +16,14 @@ import { handleSubmit } from '../../../handlers/handleEvents';
 import { DocumentUpload } from '../../systemComponents/documentUpload/DocumentUpload';
 import { LonTool } from '../../systemComponents/lonTool/LonTool';
 import { Dropdown } from '../../systemComponents/dropdown';
+import { InputTile } from '../../systemComponents/inputTile/InputTile';
 
-export const ComponentRenderer = ({ metadata, data = [], onEvent,methods}) => {
+export const ComponentRenderer = ({ 
+  metadata, 
+  data = [],
+   onEvent,
+   role
+  }) => {
   const [filter, setFilter] = useState('ALL');
   const [searchText, setSearchText] = useState('');
   const {components,submitButton} = metadata || {}
@@ -34,7 +40,8 @@ export const ComponentRenderer = ({ metadata, data = [], onEvent,methods}) => {
     form: FormRenderer,
     documentUpload: DocumentUpload,
     lontool: LonTool,
-    dropdown: Dropdown
+    dropdown: Dropdown,
+    inputile: InputTile
   };
 
   // ✅ Filter logic
@@ -106,7 +113,7 @@ export const ComponentRenderer = ({ metadata, data = [], onEvent,methods}) => {
         <Component
           key={index}
           {...props}
-          onPress={() => onEvent?.(props.event)}
+          onPress={onEvent}
         />
       ),
     }),

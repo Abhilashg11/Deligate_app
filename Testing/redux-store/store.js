@@ -8,9 +8,11 @@ import { persistStore, persistReducer } from 'redux-persist';
 import { combineReducers } from 'redux';
 import { complaintReducer } from './reducers/complaintReducer';
 import locationReducers from './reducers/locationReducers';
+import staffReducer from './staff/staffSlice'
 
 const combinedReducers = combineReducers({
   user: rootReducer,
+  staff: staffReducer,
   // auth: authReducer,
   // notification: notificationReducer,
   // loading: loadingReducer,

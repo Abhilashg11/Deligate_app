@@ -8,7 +8,7 @@ const http = require("http");
 const { Server } = require("socket.io");
 
 // DB connection (pool is initialized on require)
-const { pool } = require("./config/db");
+// const { pool } = require("./config/db");
 
 // Routes (you'll write these)
 // const authRoutes = require("./routes/authRoutes");
@@ -17,6 +17,7 @@ const { pool } = require("./config/db");
 // const notificationRoutes = require("./routes/notificationRoutes");
 // const validatorRoutes = require("./routes/validatorRoutes");
 // const superAdminRoutes = require("./routes/superAdminRoutes");
+const staffRoutes = require("./routes/staffRoutes")
 const createPatient = require("./routes/patientRoutes");
 
 const app = express();
@@ -56,12 +57,14 @@ app.use(rateLimit({
 // app.use("/admin", validatorRoutes);
 // app.use("/superadmin", superAdminRoutes);
 
-(async () => {
-  const res = await pool.query("SELECT current_database(), inet_server_addr()");
-  console.log("DB check:", res.rows[0]);
-})();
+
+// (async () => {
+//   const res = await pool.query("SELECT current_database(), inet_server_addr()");
+//   console.log("DB check:", res.rows[0]);
+// })();
 
 app.use("/patients", createPatient);
+app.use("/staff", staffRoutes);
 
 app.get("/api/data", (req, res) => res.json({ message: "Data from express" }));
 

@@ -7,6 +7,10 @@ import { DateInput } from "../../systemComponents/date";
 import LucideIcon from "../../displayComponents/icon/lucideIcons/LucideIcon";
 import { DisplayText } from "../../displayComponents/text";
 import  { Dropdown }  from "../../systemComponents/dropdown"
+import { DocumentUpload } from "../../systemComponents/documentUpload/DocumentUpload";
+import { LonTool } from "../../systemComponents/lonTool/LonTool";
+import { InputTile } from "../../systemComponents/inputTile/InputTile";
+import { Button } from "../../displayComponents/button";
 
 export function FormRenderer({
   title,
@@ -15,11 +19,15 @@ export function FormRenderer({
   icon,
   size,
   color,
+  header = true,
   name,
   // ✅ NEW
   layout = "stack",
   columns = 1,
   gap = 12,
+  showSubmit,
+  submitLabel = "Save",
+  onSubmit,
 }) {
   const FIELD_MAP = {
     text: TextBox,
@@ -27,16 +35,33 @@ export function FormRenderer({
     phone: PhoneInput,
     textarea: TextArea,
     date: DateInput,
-    dropdown: Dropdown
+    dropdown: Dropdown,
+    documentUpload: DocumentUpload,
+    lontool: LonTool,
   };
 
   const columnWidth = 100 / columns;
 
+  const handleAdd = async () => {
+  const isValid = await trigger(tileMetadata.fields);
+
+  if (!isValid) return;
+
+  const newItem = getValues(tileMetadata.name);
+
+  const existing = getValues(tileMetadata.listName) || [];
+
+  setValue(tileMetadata.listName, [...existing, newItem]);
+
+  setValue(tileMetadata.name, {});
+};
+
   return (
     <View>
       {/* HEADER */}
+      {header &&
       <View style={styles.header}>
-        <View style={styles.headerContainer}>
+         <View style={styles.headerContainer}>
           <View style={styles.titleIcon}>
             <LucideIcon icon_name={icon} size={size} color={color} />
           </View>
@@ -47,6 +72,7 @@ export function FormRenderer({
           <DisplayText style={styles.required}>required</DisplayText>
         )}
       </View>
+}
 
       {/* 🔥 STACK LAYOUT */}
       {layout !== "grid" && (
@@ -92,6 +118,14 @@ export function FormRenderer({
           })}
         </View>
       )}
+      {showSubmit && (
+  <View style={{ marginTop: 20 }}>
+    <Button
+      title={submitLabel}
+      onPress={()=>console.log("hi")}
+    />
+  </View>
+)}
     </View>
   );
 }

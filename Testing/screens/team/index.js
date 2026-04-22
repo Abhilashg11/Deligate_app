@@ -2,10 +2,17 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { ComponentRenderer } from '../../components/renders/componentRenderer/index';
 import { teamScreenMeta } from '../../metadata/home/team.metadata';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, } from '@react-navigation/native';
 import { StepFormRenderer } from '../../components/renders/stepFormRenderer/StepFormRenderer';
+import { FormProvider, useForm } from 'react-hook-form';
 
 export const TeamScreen = ({ navigation }) => {
+
+     const methods = useForm({
+        //  defaultValues: existingData,
+      mode: "onBlur",
+      reValidateMode: "onChange"
+    });
   const DATA = [
     {
       id: '1',
@@ -94,14 +101,16 @@ export const TeamScreen = ({ navigation }) => {
   };
 
   const handleEvents = (eventName, payload) => {
+    console.log('Event:', eventName, 'Payload:', payload);
     if (eventName === 'onCardPress') {
       console.log('Team screen clicked', payload);
     } else if (eventName === 'onAddPress') {
-      navigatation.navigate('newStaffScreen');
+      navigatation.navigate('newStaffScreen',{role: payload});
     }
   };
   return (
     <View style={{ flex: 1, }}>
+      <FormProvider {...methods}>
       <StepFormRenderer
         metadata={teamScreenMeta}
         onEvent={handleEvents}
@@ -109,6 +118,7 @@ export const TeamScreen = ({ navigation }) => {
         data={DATA}
         isStep={false}
       />
+      </FormProvider>
     </View>
   );
 };

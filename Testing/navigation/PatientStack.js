@@ -3,7 +3,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {PatientScreen} from "../screens/patients/index";
 const Stack = createNativeStackNavigator();
 
-export const PatientStack = () => {
+export const PatientStack = ({
+  methods
+}) => {
   return (
     <Stack.Navigator>
       <Stack.Screen 

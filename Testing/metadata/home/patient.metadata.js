@@ -139,7 +139,7 @@ export const newPatientMeta = {
             components: [
               {
                 type: 'text',
-                name: 'PCP',
+                name: 'PCP_test',
                 label: 'PCP (Primary Care Provider)',
                 placeholder: "+1(555) 123-4567",
                 required: false,
@@ -150,22 +150,10 @@ export const newPatientMeta = {
                 },
                 span: 2,
               },
-               {
-                type: 'text',
-                name: 'Approval_Number',
-                label: 'Approval Number',
-                placeholder: "APR-000000",
-                required: false,
-                 startAdornment: {
-                    icon_name: 'Lock',
-                size: 15,
-                color: '#999999',
-                },
-                span: 2,
-              },
+
               {
                 type: 'dropdown',
-                name: 'dropdown',
+                name: 'dropdown_test',
                 label: 'Date of Birth',
                 options: [
     { label: 'Option 1', value: 'Option 1' },
@@ -178,8 +166,21 @@ export const newPatientMeta = {
               },
               {
                 type: 'text',
-                name: 'maNumber',
+                name: 'maNumber_test',
                 label: 'MA Number',
+              },
+                       {
+                type: 'text',
+                name: 'Approval_Number_test',
+                label: 'Approval Number',
+                placeholder: "APR-000000",
+                required: false,
+                 startAdornment: {
+                    icon_name: 'Lock',
+                size: 15,
+                color: '#999999',
+                },
+                span: 2,
               },
             ],
           },
@@ -221,8 +222,38 @@ export const newPatientMeta = {
         backButton: true,
         },
         components: [
+          {
+            type: "inputile",
+            name: 'diagnosis',
+            props: {
+              title: "Diagnosis",
+              buttonLabel: "Add Medication",
+              components: [
+                   {
+                type: 'text',
+                name: 'maNumber',
+                label: 'MA Number',
+              },
+                 {
+                type: 'dropdown',
+                name: 'dropdown',
+                label: 'Date of Birth',
+                options: [
+    { label: 'Option 1', value: 'Option 1' },
+    { label: 'Option 2', value: 'Option 2' },
+    { label: 'Option 3', value: 'Option 3' },
+    { label: 'Option 4', value: 'Option 4' },
+    { label: 'Option 5', value: 'Option 5' },
+    { label: 'Option 6', value: 'Option 6' }
+  ]
+              },
+              ]
+            }
 
-        ]
+          }
+        ],
+
     },
+    
   ],
 };

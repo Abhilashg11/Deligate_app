@@ -18,92 +18,72 @@ import DocumentPicker from 'react-native-document-picker';
 export const LicenseUpload = ({
   title,
   name = '',
-  // file,
-  expiryDate,
   postuploadicons: { eye, cancel } = {},
-  dateMeta,
-  label = 'hi',
-  onUpload,
-  onDelete,
-  placeholder,
-  rules,
-  onView,
+  data,
   required = false,
-  defaultValue = null,
-  date,
-  onDateChange,
+  defaultValue = {},
 }) => {
-  const [file, setFile] = useState();
-  const { colors } = useTheme();
-  const data = ['CMT', 'MTTP', 'Med Pass', 'BGM', 'Seizure Protocol'];
   const { control } = useFormContext();
-  const [open, setOpen] = useState(false);
-  const [documents, setDocuments] = useState({});
   const [openIndex, setOpenIndex] = useState(null);
+
   const {
-    field: { value, onChange },
+    field: { value = {}, onChange },
     fieldState: { error },
   } = useController({
-    name: name,
+    name,
     control,
+    defaultValue,
     rules: {
       required: required?.display ? 'This field is required' : false,
-      ...rules,
     },
-    defaultValue,
   });
 
-  useEffect(() => {
-    onChange(documents);
-  }, [documents]);
-
-  const handleView = async doc => {
-    try {
-      if (doc.uri) {
-        const supported = await Linking.canOpenURL(doc.uri);
-        if (supported) {
-          await Linking.openURL(doc.uri);
-        } else {
-          console.log("Can't open this file type");
-        }
-      }
-    } catch (e) {
-      console.log(e);
-    }
+  // 👇 helper to update one item
+  const updateField = (key, newData) => {
+    onChange({
+      ...value,
+      [key]: {
+        ...value[key],
+        ...newData,
+      },
+    });
   };
 
   const handleUpload = async key => {
     try {
-      // 1️⃣ Open file picker
       const res = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.images, DocumentPicker.types.pdf],
       });
 
-      // 2️⃣ Show loading
-      setDocuments(prev => ({
-        ...prev,
-        [key]: { ...prev[key], loading: true },
-      }));
+      // set loading
+      updateField(key, { loading: true });
 
-      // 3️⃣ Simulate upload (replace with API call)
+      // simulate upload
       setTimeout(() => {
-        setDocuments(prev => ({
-          ...prev,
-          [key]: {
-            ...prev[key],
-            file: res.name,
-            uri: res.uri,
-            type: res.type,
-            loading: false,
-          },
-        }));
-      }, 1500);
+        updateField(key, {
+          file: res.name,
+          uri: res.uri,
+          type: res.type,
+          loading: false,
+        });
+      }, 1000);
     } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        console.log('User cancelled');
-      } else {
+      if (!DocumentPicker.isCancel(err)) {
         console.error(err);
       }
+    }
+  };
+
+  const handleDelete = key => {
+    const updated = { ...value };
+    delete updated[key];
+    onChange(updated);
+  };
+
+  const handleView = async doc => {
+    if (doc?.uri) {
+      const supported = await Linking.canOpenURL(doc.uri);
+      if (supported) await Linking.openURL(doc.uri);
     }
   };
   return (
@@ -127,9 +107,9 @@ export const LicenseUpload = ({
         </View>
       </View>
 
-      {data.map((item, index) => {
+      {data?.items?.map((item, index) => {
         const key = item;
-        const doc = documents[key] || {};
+        const doc = value[key] || {};
 
         return (
           <View key={key} style={styles.row}>
@@ -175,19 +155,12 @@ export const LicenseUpload = ({
                 open={openIndex === index}
                 date={new Date()}
                 onConfirm={selectedDate => {
-                  console.log(
-                    'date....',
-                    selectedDate.toISOString().split('T')[0],
-                  );
                   setOpenIndex(null);
 
-                  setDocuments(prev => ({
-                    ...prev,
-                    [key]: {
-                      ...prev[key],
-                      date: selectedDate.toISOString().split('T')[0],
-                    },
-                  }));
+                 setOpenIndex(null);
+                  updateField(key, {
+                    date: selectedDate.toISOString().split('T')[0],
+                  });
                 }}
                 onCancel={() => setOpenIndex(null)}
               />

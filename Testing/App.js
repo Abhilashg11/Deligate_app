@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { StatusBar, Text, View } from 'react-native';
+import React, { useMemo, useRef } from 'react';
+import { StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from './themes/ThemeProvider';
 import { DisplayText } from './components/displayComponents/text';
@@ -10,7 +10,7 @@ import { Button } from './components/displayComponents/button';
 import { patientWorkflow } from './metadata/home/profile.metadata';
 import { useEffect } from 'react';
 import { runMigrations } from './database/migrations';
-import { WorkflowRenderer } from "./components/renders/workflowRenderer"
+// import { WorkflowRenderer } from "./components/renders/workflowRenderer"
 import Test2 from './components/systemComponents/date/Test2';
 import AuthGate from './screens/Auth/AuthGate'
 import { homeForm } from './metadata/home/profile.metadata'
@@ -32,11 +32,17 @@ import LoginFrom from './screens/Auth/LoginForm'
 import LoginScreen from './screens/Auth/LoginForm';
 import { ScreenRenderer } from './components/renders/screenRenderer';
 import { loginForm } from './metadata/home/login.metadata'
-import { StepFormRenderer } from './components/renders/stepFormRenderer/StepFormRenderer';
+// import { StepFormRenderer } from './components/renders/stepFormRenderer/StepFormRenderer';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { FormProvider, useForm } from 'react-hook-form';
+
 
 
 function App() {
   // console.log("App metadata:", homeForm);
+
+
   return (
     <SafeAreaProvider>
       <Provider store={store}>
@@ -53,13 +59,19 @@ function App() {
 }
 
 function AppContent() {
-  const LOCAL_PATIENT_ID = 'patient-001';
+const sheetRef = useRef(null);
+  const snapPoints = useMemo(() => ['50%'], []);
 
-  const [isReady, setIsReady] = React.useState(true);
-  // Inside AppContent
-  const [patient, setPatient] = React.useState(null);
+  const openSheet = () => {
+    console.log("pressed")
+    sheetRef.current?.expand(); // 🔥 open
+  };
 
-  useEffect(() => {
+  const closeSheet = () => {
+    sheetRef.current?.close(); // optional
+  };
+  
+   useEffect(() => {
 
     runMigrations();
     
@@ -80,17 +92,23 @@ function AppContent() {
 
   }, []);
 
-  if (!isReady) {
-    return <Text>Loading...</Text>;
-  }
-
   return (
-    <View style={{ flex: 1,justifyContent: 'center'}}>
+    <GestureHandlerRootView style={{ flex: 1,justifyContent: 'center'}}>
+      {/* <BottomSheetModalProvider> */}
       <AuthGate
       metadata={loginForm}
       />
-    </View>
+      {/* </BottomSheetModalProvider> */}
+    </GestureHandlerRootView>
   );
 }
 
 export default App;
+
+
+
+// function App() {
+// }
+
+// function AppContent() {
+// }

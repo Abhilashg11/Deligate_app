@@ -21,6 +21,8 @@ import { BottomTabs } from '../../navigation/BottomTabs';
 // import useGeoLocation from '~/components/hooks/useGeoLocation';
 // import { setLocationName } from '~/store/actions/locationActions';
 import LoginForm from './LoginForm';
+import { BottomSlider } from '../../components/displayComponents/BottomSlider/BottomSlider';
+import { BottomSheetProvider } from '../../context/BottomSheetContext';
 
 const AuthGate = ({ metadata }) => {
   // const { loading, token } = useSelector((state) => state.auth);
@@ -146,7 +148,10 @@ const AuthGate = ({ metadata }) => {
 
   return (
     <NavigationContainer>
-      <BottomTabs />
+      <BottomSheetProvider>
+         <BottomTabs />
+        {/* <BottomSlider/> */}
+      </BottomSheetProvider>
     </NavigationContainer>
   );
 };

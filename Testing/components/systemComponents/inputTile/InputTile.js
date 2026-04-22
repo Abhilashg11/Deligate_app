@@ -1,31 +1,64 @@
-import { StyleSheet, View } from "react-native"
-import { DisplayText } from "../../displayComponents/text"
+import React, { useRef, useMemo, useState } from 'react';
+import { Pressable, StyleSheet, View, Text } from "react-native";
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import { FormRenderer } from '../../renders/formRenderer';
+import { useBottomSheet } from '../../../context/BottomSheetContext';
 
 export const InputTile = ({
-    label
+  metadata,
+  data,
+  components = [],
+  title,
+  onEvent,
+  name,
+  buttonLabel,
+  label="Add medication"
 }) => {
 
-    return(
-        <View>
-            <View>
-                {label && (
-                    <DisplayText>
-                        {label}
-                    </DisplayText>
-                )}
+  const { openSheet } = useBottomSheet()
 
-                <View style={styles.addContainer}>
+  // const openSheet = () => {
+  //   setIsOpen(true);
+  // };
 
-                </View>
-            </View>
+  // const closeSheet = () => {
+  //   setIsOpen(false);
+  // };
+  console.log("InputTile context:", useBottomSheet());
 
-        </View>
-    )
-}
+  const handleSheet = () => {
+    console.log("pressed",components)
+    openSheet({
+      title: buttonLabel,
+      name: name,
+      components: components
+    })
+  }
+
+  return (
+    <>
+      <Pressable style={styles.addContainer} onPress={handleSheet}>
+        <Text style={styles.label}>{buttonLabel || "press"}</Text>
+      </Pressable>
+
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
-    addContainer: {
-        borderWidth: 1,
-        padding: 15
-    }
-})
+  addContainer: {
+    borderWidth: 1,
+    borderStyle: 'dashed',
+    borderColor: '#D0D0D0',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  label: {
+    color: '#666',
+  },
+  sheetContent: {
+    flex: 1,
+    padding: 20,
+  },
+});

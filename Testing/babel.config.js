@@ -14,5 +14,6 @@ module.exports = {
         },
       },
     ],
+    'react-native-reanimated/plugin', // 🔥 MUST BE LAST (no array)
   ],
 };
